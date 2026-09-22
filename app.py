@@ -4,9 +4,6 @@ import os
 import pandas as pd
 
 def tampilkan_tugas_berjalan():
-    if not os.path.exists(FILE_CSV):
-        st.info("Belum ada tugas yang ditambahkan.")
-        return
 
     with open(FILE_CSV, mode="r") as f:
         reader = csv.reader(f)
@@ -43,8 +40,16 @@ def tampilkan_tugas_berjalan():
                         
                         st.rerun()
     if not ada_tugas:
-        st.info("Tidak ada tugas yang belum diselesaikan.")
-        
+        st.markdown("<p style='text-align: center; color: gray; height: 50px;'>Tidak ada tugas yang belum diselesaikan.</p>", unsafe_allow_html=True)
+
+
+def tampilkan_tugas_selesai():
+
+    tidak_ada_tugas = False
+    if not tidak_ada_tugas:
+        st.markdown("<p style='text-align: center; color: gray; height: 50px;'>Anda belum menyelesaikan tugas apapun.</p>", unsafe_allow_html=True)
+    
+    
                         
 
 FILE_CSV = "task-data.csv"
@@ -65,10 +70,15 @@ with st.container(border=True):
             writer.writerow([nama_tugas, deadline, isFinished])
         st.success(f"Tugas \"{nama_tugas}\" sudah di tambahkan.")
 
-# panggil function yg tadi
+# panggil function yg tadi tampil tugas tampilkan tugas
 with st.container(border=True):
-    st.header("Tugas yang belum selesai")
+    st.header("Daftar Tugas")
     tampilkan_tugas_berjalan()
+
+with st.container(border=True):
+    st.header("Tugas yang diselesaikan")
+    tampilkan_tugas_selesai()
+
 
 # with st.container(border=True):
 #     st.header("Tugas yang belum selesai")
