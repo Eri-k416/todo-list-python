@@ -109,17 +109,4 @@ with st.container(border=True):
     st.header("Tugas yang diselesaikan")
     tampilkan_tugas_selesai()
 
-
-# with st.container(border=True):
-#     st.header("Tugas yang belum selesai")
-#     # if os.path.exists(FILE_CSV):
-#     #     with open(FILE_CSV) as f:
-#     #         df = pd.read_csv(csv.reader(f))
-#     #         for row in df.itertuples():
-#     #             with st.container(border=True):
-#     #                 st.subheader(task)
-#     #                 st.text(task[1])
-#     #             if st.checkbox():
-# with st.container(border=True):
-#     st.header("Riwayat tugas yang selesai")
                     
