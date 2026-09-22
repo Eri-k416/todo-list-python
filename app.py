@@ -13,7 +13,7 @@ with st.container(border=True):
     
     nama_tugas = st.text_input("Nama tugas :")
     deadline = st.date_input("Tenggat tanggal tugas :")
-    
+
     if st.button("Tambah Tugas ➕"):
         isFinished = False
         with open(FILE_CSV, mode="a", newline="") as f:
@@ -23,14 +23,12 @@ with st.container(border=True):
 
 with st.container(border=True):
     st.header("Tugas yang belum selesai")
-    # if os.path.exists(FILE_CSV):
-    #     with open(FILE_CSV) as f:
-    #         df = pd.read_csv(csv.reader(f))
-    #         for row in df.itertuples():
-    #             with st.container(border=True):
-    #                 st.subheader(task)
-    #                 st.text(task[1])
-    #             if st.checkbox():
-with st.container(border=True):
-    st.header("Riwayat tugas yang selesai")
-                    
+    if os.path.exists(FILE_CSV):
+        with open(FILE_CSV) as f:
+            data = list(csv.reader(f))
+            for task in data:
+                with st.container(border=True):
+                    with st.container():
+                        st.subheader(task[0])
+                        st.text(task[1])
+                    isFinished = st.checkbox("")
