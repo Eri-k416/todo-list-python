@@ -7,7 +7,8 @@ def tampilkan_tugas_berjalan():
 
     with open(FILE_CSV, mode="r") as f:
         reader = csv.reader(f)
-        data_tugas = list(reader)
+        data_tugas = filter(lambda x: x[2] == "False",list(reader))
+        
 
     ada_tugas = False
     
@@ -19,26 +20,25 @@ def tampilkan_tugas_berjalan():
         deadline = tugas[1]
         status = tugas[2]
 
-        if status == "False":
-            ada_tugas = True
-            with st.container(border=True):
-                col_teks, col_cek = st.columns([4, 1])
+        ada_tugas = True
+        with st.container(border=True):
+            col_teks, col_cek = st.columns([4, 1])
+            
+            with col_teks:
+                st.markdown(f"**{nama_tugas}**")
+                st.caption(f"Deadline: {deadline}")
+            
+            with col_cek:
+                st.write("") 
+                is_checked = st.checkbox("Selesai", key=f"tugas_{index}")
                 
-                with col_teks:
-                    st.markdown(f"**{nama_tugas}**")
-                    st.caption(f"Deadline: {deadline}")
-                
-                with col_cek:
-                    st.write("") 
-                    is_checked = st.checkbox("Selesai", key=f"tugas_{index}")
+                if is_checked:
+                    data_tugas[index][2] = "True"
+                    with open(FILE_CSV, mode="w", newline="") as f_write:
+                        writer = csv.writer(f_write)
+                        writer.writerows(data_tugas)
                     
-                    if is_checked:
-                        data_tugas[index][2] = "True"
-                        with open(FILE_CSV, mode="w", newline="") as f_write:
-                            writer = csv.writer(f_write)
-                            writer.writerows(data_tugas)
-                        
-                        st.rerun()
+                    st.rerun()
     if not ada_tugas:
         st.markdown("<p style='text-align: center; color: gray; height: 50px;'>Tidak ada tugas yang belum diselesaikan.</p>", unsafe_allow_html=True)
 
@@ -48,7 +48,7 @@ def tampilkan_tugas_selesai():
     tidak_ada_tugas = False
     if not tidak_ada_tugas:
         st.markdown("<p style='text-align: center; color: gray; height: 50px;'>Anda belum menyelesaikan tugas apapun.</p>", unsafe_allow_html=True)
-    
+
     
                         
 
