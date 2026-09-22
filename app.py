@@ -42,6 +42,9 @@ def tampilkan_tugas_berjalan():
                             writer.writerows(data_tugas)
                         
                         st.rerun()
+    if not ada_tugas:
+        st.info("Tidak ada tugas yang belum diselesaikan.")
+        
                         
 
 FILE_CSV = "task-data.csv"
