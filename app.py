@@ -3,6 +3,7 @@ import csv
 import os
 import pandas as pd
 
+# Fungsi untuk menampilkan tugas saat ini
 def tampilkan_tugas_berjalan():
 
     with open(FILE_CSV, mode="r") as f:
@@ -41,7 +42,7 @@ def tampilkan_tugas_berjalan():
     if not ada_tugas:
         st.markdown("<p style='text-align: center; color: gray; height: 50px;'>Tidak ada tugas yang belum diselesaikan.</p>", unsafe_allow_html=True)
 
-
+# Fungsi untuk tampilkan tugas yang sudah selesai 
 def tampilkan_tugas_selesai():
     with open(FILE_CSV, mode="r") as f:
         reader = csv.reader(f)
@@ -81,7 +82,7 @@ def tampilkan_tugas_selesai():
 
     
                         
-
+# Set variabel untuk nama file csv
 FILE_CSV = "task-data.csv"
 
 st.title("To-do app")
@@ -100,7 +101,7 @@ with st.container(border=True):
             writer.writerow([nama_tugas, deadline, isFinished])
         st.success(f"Tugas \"{nama_tugas}\" sudah di tambahkan.")
 
-# panggil function yg tadi tampil tugas tampilkan tugas
+# memanggil 2 function
 with st.container(border=True):
     st.header("Daftar Tugas")
     tampilkan_tugas_berjalan()
