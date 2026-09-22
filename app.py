@@ -3,6 +3,47 @@ import csv
 import os
 import pandas as pd
 
+def tampilkan_tugas_berjalan():
+    if not os.path.exists(FILE_CSV):
+        st.info("Belum ada tugas yang ditambahkan.")
+        return
+
+    with open(FILE_CSV, mode="r") as f:
+        reader = csv.reader(f)
+        data_tugas = list(reader)
+
+    ada_tugas = False
+    
+    for index, tugas in enumerate(data_tugas):
+        if len(tugas) < 3: 
+            continue
+            
+        nama_tugas = tugas[0]
+        deadline = tugas[1]
+        status = tugas[2]
+
+        if status == "False":
+            ada_tugas = True
+            with st.container(border=True):
+                col_teks, col_cek = st.columns([4, 1])
+                
+                with col_teks:
+                    st.markdown(f"**{nama_tugas}**")
+                    st.caption(f"Deadline: {deadline}")
+                
+                with col_cek:
+                    st.write("") 
+                    is_checked = st.checkbox("Selesai", key=f"tugas_{index}")
+                    
+                    if is_checked:
+                        data_tugas[index][2] = "True"
+                        with open(FILE_CSV, mode="w", newline="") as f_write:
+                            writer = csv.writer(f_write)
+                            writer.writerows(data_tugas)
+                        
+                        st.rerun()
+                        
+
 FILE_CSV = "task-data.csv"
 
 st.title("To-do app")
@@ -23,14 +64,18 @@ with st.container(border=True):
 
 with st.container(border=True):
     st.header("Tugas yang belum selesai")
-    # if os.path.exists(FILE_CSV):
-    #     with open(FILE_CSV) as f:
-    #         df = pd.read_csv(csv.reader(f))
-    #         for row in df.itertuples():
-    #             with st.container(border=True):
-    #                 st.subheader(task)
-    #                 st.text(task[1])
-    #             if st.checkbox():
-with st.container(border=True):
-    st.header("Riwayat tugas yang selesai")
+    tampilkan_tugas_berjalan()
+
+# with st.container(border=True):
+#     st.header("Tugas yang belum selesai")
+#     # if os.path.exists(FILE_CSV):
+#     #     with open(FILE_CSV) as f:
+#     #         df = pd.read_csv(csv.reader(f))
+#     #         for row in df.itertuples():
+#     #             with st.container(border=True):
+#     #                 st.subheader(task)
+#     #                 st.text(task[1])
+#     #             if st.checkbox():
+# with st.container(border=True):
+#     st.header("Riwayat tugas yang selesai")
                     
