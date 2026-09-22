@@ -62,6 +62,7 @@ with st.container(border=True):
             writer.writerow([nama_tugas, deadline, isFinished])
         st.success(f"Tugas \"{nama_tugas}\" sudah di tambahkan.")
 
+# panggil function yg tadi
 with st.container(border=True):
     st.header("Tugas yang belum selesai")
     tampilkan_tugas_berjalan()
